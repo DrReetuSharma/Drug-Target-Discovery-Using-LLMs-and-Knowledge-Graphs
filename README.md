@@ -4,7 +4,7 @@
 
 ## Key Contributions
 
-### LLM Integration: Implemented open-source LLMs (e.g., GPT-3, BERT) for natural language querying of biomedical data.
+### LLM Integration: Implemented open-source LLMs for natural language querying of biomedical data.
 ### Knowledge Graph Development:  Built a modular knowledge graph using Neo4j to represent drug-target interactions and biomedical entities.
 ### Data Pipeline: Designed robust pipelines for data ingestion, preprocessing, and integration from diverse biomedical datasets.
 ### APIs and User Interface: Developed APIs and a user-friendly web interface to allow researchers to query the knowledge graph using natural language.
