@@ -1,5 +1,5 @@
 MIT License
-
+copyright (c) 2024 Reetu Sharma
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software "Drug-Target-Discovery-Using-LLMs-and-Knowledge-Graphs"
  and associated documentation files (the "Software"), to deal
