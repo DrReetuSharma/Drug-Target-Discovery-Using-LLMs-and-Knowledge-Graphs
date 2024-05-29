@@ -1,1 +1,9 @@
-
+transformers
+torch
+pandas
+numpy
+scipy
+scikit-learn
+networkx
+rdkit
+matplotlib
