@@ -1,8 +1,8 @@
 import re
+import stringcase # Ensure this library is installed: `pip install stringcase`
 from typing import Any
-
 from collections.abc import Iterable
-import stringcase  # Ensure this library is installed: `pip install stringcase`
+  
 
 # Define LIST_LIKE if necessary
 LIST_LIKE = (list, tuple, set)
