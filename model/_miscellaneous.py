@@ -2,6 +2,7 @@ import re
 from typing import Any
 
 from collections.abc import Iterable
+import stringcase  # Ensure this library is installed: `pip install stringcase`
 
 # Define LIST_LIKE if necessary
 LIST_LIKE = (list, tuple, set)
@@ -11,6 +12,18 @@ def verify_iterable(value: Any) -> Iterable:
     Returns iterables, except strings, wraps simple types into tuple.
     """
     return value if isinstance(value, LIST_LIKE) else (value,)
+
+def sentencecase_to_snakecase(s: str) -> str:
+    """
+    Convert sentence case to snake_case.
+
+    Args:
+        s: Input string in sentence case
+
+    Returns:
+        string in snake_case form
+    """
+    return stringcase.snakecase(s).lower()
 
 def sentencecase_to_pascalcase(s: str) -> str:
     """
