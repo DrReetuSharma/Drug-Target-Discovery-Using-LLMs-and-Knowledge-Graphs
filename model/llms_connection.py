@@ -4,7 +4,7 @@ import logging
 import nltk  # Make sure nltk is properly installed and imported
 from transformers import pipeline, BigScienceModule, BloomModule, GPT2Tokenizer, GPT2Model
 
-class Conversation(ABC):
+class ChatInterface(ABC):
     def __init__(
         self,
         model_name_or_path: str,
