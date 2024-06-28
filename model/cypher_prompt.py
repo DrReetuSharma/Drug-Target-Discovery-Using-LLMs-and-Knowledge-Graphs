@@ -12,14 +12,14 @@ class CypherPrompt:
         schema_file_path: Optional[str] = None,
         schema_config_or_info_dict: Optional[dict] = None,
         model_name: str = "gpt-3.5-turbo",
-        conversation_factory: Optional[callable] = None,
+        chat_factory: Optional[callable] = None,
     ) -> None:
         """
         CypherPrompt class for generating queries from schema configurations.
 
         Args:
 
-             Model_name: Deprecated. Model name for the conversation.
+             Model_name: Deprecated. Model name for the chat.
              
             schema_file_path: Path to a biocypher schema configuration
                 file or schema information output.
@@ -27,7 +27,7 @@ class CypherPrompt:
             schema_config_or_info_dict: Dictionary containing schema configuration
                 or schema information.
 
-            conversation_factory: Function to create a conversation for KG query.
+            chat_factory: Function to create a chat for KG query.
         """
         if not schema_file_path and not schema_config_or_info_dict:
             raise ValueError(
@@ -41,10 +41,10 @@ class CypherPrompt:
                 "path to a file or as a dictionary, not both."
             )
 
-        self.conversation_factory = (
-            conversation_factory
-            if conversation_factory is not None
-            else self._get_conversation
+        self.chat_factory = (
+            chat_factory
+            if chat_factory is not None
+            else self._get_chat
         )
 
         if schema_file_path:
@@ -146,7 +146,7 @@ class CypherPrompt:
             Generated database query.
         """
         success1 = self._select_entities(
-            question=question, conversation=self.conversation_factory()
+            question=question, chat=self.chat_factory()
         )
         if not success1:
             raise ValueError(
@@ -154,7 +154,7 @@ class CypherPrompt:
                 "question."
             )
         success2 = self._select_relationships(
-            conversation=self.conversation_factory()
+            chat=self.chat_factory()
         )
         if not success2:
             raise ValueError(
@@ -162,7 +162,7 @@ class CypherPrompt:
                 "different question."
             )
         success3 = self._select_properties(
-            conversation=self.conversation_factory()
+            chat=self.chat_factory()
         )
         if not success3:
             raise ValueError(
@@ -176,30 +176,30 @@ class CypherPrompt:
             relationships=self.selected_relationship_labels,
             properties=self.selected_properties,
             query_language=query_language,
-            conversation=self.conversation_factory(),
+            chat=self.chat_factory(),
         )
 
-    def _get_conversation(
+    def _get_chat(
         self, model_name: Optional[str] = None
-    ) -> "Conversation":
+    ) -> "ChatInterface":
         """
-        Creates a conversation object for knowledge graph query.
+        Creates a chat object for knowledge graph query.
 
         Args:
             model_name: Model name for the conversation.
 
         Returns:
-            Conversation object.
+            chat object.
         """
-        conversation = GptConversation(
+        conversation = GptChat(
             model_name=model_name or self.model_name,
             prompts={},
             correct=False,
         )
-        conversation.set_api_key(
+        chat.set_api_key(
             api_key=os.getenv("OPENAI_API_KEY"), user="test_user"
         )
-        return conversation
+        return chat
 
     def _select_entities(
         self, question: str, conversation: "Conversation"
@@ -217,7 +217,7 @@ class CypherPrompt:
         """
         self.question = question
 
-        conversation.append_system_message(
+        chat.append_system_message(
             (
                 "You have access to a knowledge graph that contains "
                 f"these entity types: {', '.join(self.entities)}. Your task is "
@@ -228,7 +228,7 @@ class CypherPrompt:
             )
         )
 
-        msg, token_usage, correction = conversation.query(question)
+        msg, token_usage, correction = chat.query(question)
 
         result = msg.split(",") if msg else []
 
@@ -240,12 +240,12 @@ class CypherPrompt:
 
         return bool(result)
 
-    def _select_relationships(self, conversation: "Conversation") -> bool:
+    def _select_relationships(self, conversation: "ChatInterface") -> bool:
         """
         Selects relevant relationships based on selected entities.
 
         Args:
-            conversation: Conversation object.
+            chat: chat object.
 
         Returns:
             True if at least one relationship was selected, False otherwise.
