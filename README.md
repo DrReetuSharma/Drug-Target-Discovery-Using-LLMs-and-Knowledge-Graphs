@@ -12,7 +12,7 @@
 
 ## Technologies Used
 Programming Languages: Python
-Frameworks and Tools: Neo4j, BioCypher, Docker, LangChain, LLM frameworks (e.g., llama-cpp)
+Frameworks and Tools: Neo4j, Cypher, Docker, LangChain, LLM frameworks (e.g., llama-cpp)
 Version Control: Git, GitHub
 
 ## Impact
