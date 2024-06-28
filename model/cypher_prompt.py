@@ -3,7 +3,7 @@ import os
 import json
 import yaml
 from ._miscellaneous import verify_iterable, sentencecase_to_pascalcase
-from .llms_connection import Conversation, GptConversation
+from .llms_connection import ChatInterface, GptConversation
 
 
 class CypherPrompt:
