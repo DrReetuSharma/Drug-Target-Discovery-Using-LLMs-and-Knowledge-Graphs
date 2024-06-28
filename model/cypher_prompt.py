@@ -2,7 +2,6 @@ from typing import Optional
 import os
 import json
 import yaml
-
 from ._miscellaneous import verify_iterable, sentencecase_to_pascalcase
 from .llms_connection import Conversation, GptConversation
 
@@ -19,13 +18,14 @@ class CypherPrompt:
         CypherPrompt class for generating queries from schema configurations.
 
         Args:
+
+             Model_name: Deprecated. Model name for the conversation.
+             
             schema_file_path: Path to a biocypher schema configuration
                 file or schema information output.
 
             schema_config_or_info_dict: Dictionary containing schema configuration
                 or schema information.
-
-            model_name: Deprecated. Model name for the conversation.
 
             conversation_factory: Function to create a conversation for KG query.
         """
